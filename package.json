@@ -6,13 +6,17 @@
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
 		"start": "wrangler dev",
-		"test": "vitest",
 		"cf-typegen": "wrangler types"
 	},
 	"devDependencies": {
-		"@cloudflare/vitest-pool-workers": "^0.8.19",
+		"@vercel/og": "^0.8.6",
 		"typescript": "^5.5.2",
-		"vitest": "~3.2.0",
 		"wrangler": "^4.54.0"
+	},
+	"dependencies": {
+		"@resvg/resvg-wasm": "^2.6.2",
+		"just-camel-case": "^6.2.0",
+		"satori": "0.15.2",
+		"yoga-wasm-web": "^0.3.3"
 	}
 }

@@ -1,18 +1,33 @@
 /**
- * Welcome to Cloudflare Workers! This is your first worker.
+ * Ogify - OG Image Generation Worker
  *
- * - Run `npm run dev` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `npm run deploy` to publish your worker
+ * A Cloudflare Worker that generates Open Graph images via Service Bindings.
+ * Uses Satori to render HTML/React to SVG, then Resvg-wasm to convert to PNG.
  *
- * Bind resources to your worker in `wrangler.jsonc`. After adding bindings, a type definition for the
- * `Env` object can be regenerated with `npm run cf-typegen`.
+ * Usage via Service Binding:
+ *   const response = await env.OGIFY.image(html, options);
  *
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-export default {
-	async fetch(request, env, ctx): Promise<Response> {
-		return new Response('Hello World!');
-	},
-} satisfies ExportedHandler<Env>;
+import { WorkerEntrypoint } from "cloudflare:workers";
+import { createImageResponse } from "./og";
+import type { ImageResponseOptions } from "./types";
+
+export default class Ogify extends WorkerEntrypoint {
+	// Currently, entrypoints without a named handler are not supported
+	async fetch() {
+		return new Response(null, { status: 404 });
+	}
+
+	/**
+	 * Generate an OG image from HTML string
+	 * @param html - HTML string to render (must use inline styles, flexbox layout)
+	 * @param options - Image generation options (width, height, format, fonts, emoji)
+	 * @returns Response with generated image (PNG or SVG)
+	 */
+	async image(html: string, options: ImageResponseOptions): Promise<Response> {
+		console.log("image called", html, options);
+		return createImageResponse(html, options);
+	}
+}

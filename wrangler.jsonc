@@ -9,7 +9,10 @@
 	"compatibility_date": "2026-01-03",
 	"observability": {
 		"enabled": true
-	}
+	},
+	"placement": {
+    "mode": "smart"
+  }
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
