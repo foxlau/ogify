@@ -27,7 +27,6 @@ export default class Ogify extends WorkerEntrypoint {
 	 * @returns Response with generated image (PNG or SVG)
 	 */
 	async image(html: string, options: ImageResponseOptions): Promise<Response> {
-		console.log("image called", html, options);
 		return createImageResponse(html, options);
 	}
 }
